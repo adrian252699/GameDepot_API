@@ -54,9 +54,9 @@ public class CarritoMapper {
         ItemCarritoResponseDTO dto = new ItemCarritoResponseDTO();
 
         dto.setId(item.getId());
-        dto.setProductoId(item.getVideojuego().getId());
+        dto.setVideojuegoId(item.getVideojuego().getId());
         dto.setCategoria(item.getVideojuego().getCategoria().getNombre());
-        dto.setNombreProducto(item.getVideojuego().getNombre());
+        dto.setNombreVideojuego(item.getVideojuego().getNombre());
         dto.setStockDisponible(item.getVideojuego().getStock());
         dto.setPrecioUnitario(precio);
         dto.setSubtotal(subtotal);

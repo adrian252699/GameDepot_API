@@ -95,7 +95,8 @@ public class SecurityConfig{
                         //Ordenes
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/api/ordenes"
+                                "/api/ordenes",
+                                "/api/ordenes/pendientes"
                         ).hasRole("CLIENTE")
 
                         .requestMatchers(

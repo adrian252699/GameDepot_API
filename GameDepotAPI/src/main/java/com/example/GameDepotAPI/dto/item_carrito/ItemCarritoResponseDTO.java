@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 @Builder
 public class ItemCarritoResponseDTO {
     private Long id;
-    private Long productoId;
-    private String nombreProducto;
+    private Long videojuegoId;
+    private String nombreVideojuego;
     private String categoria;
     private BigDecimal precioUnitario;
     private Integer cantidad;
