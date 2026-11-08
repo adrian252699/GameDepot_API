@@ -1,9 +1,13 @@
 package com.example.GameDepotAPI.service;
 
+import com.example.GameDepotAPI.dto.videojuego.ActualizarVideojuegoDTO;
+import com.example.GameDepotAPI.dto.videojuego.GuardarVideojuegoDTO;
+import com.example.GameDepotAPI.dto.videojuego.MostrarVideojuegoDTO;
 import com.example.GameDepotAPI.exception.NegocioException;
 import com.example.GameDepotAPI.exception.RecursoNoEncontradoException;
 import com.example.GameDepotAPI.model.videojuego.Videojuego;
 import com.example.GameDepotAPI.repository.VideojuegoRepository;
+import com.example.GameDepotAPI.service.mappers.VideojuegoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +20,24 @@ public class VideojuegoService {
     @Autowired
     private VideojuegoRepository videojuegoRepository;
 
-    public Videojuego guardarVideojuego(Videojuego videojuego) {
+    public GuardarVideojuegoDTO guardarVideojuego(GuardarVideojuegoDTO videojuegoDTO) {
 
-        return videojuegoRepository.save(videojuego);
+        Videojuego videojuegoEntity = videojuegoRepository.save(VideojuegoMapper.toVideojuegoEntity(videojuegoDTO));
+
+        return VideojuegoMapper.toGuardarVideojuegoDTO(videojuegoEntity);
     }
 
-    public Videojuego obtenerPorId(Long id) {
-        return videojuegoRepository.getById(id);
+    public MostrarVideojuegoDTO obtenerPorId(Long id) {
+        return VideojuegoMapper.toMostrarVideojuegoDTO(videojuegoRepository.getById(id));
     }
 
-    public List<Videojuego> obtenerVideosjuegosActivos() {
+    public List<MostrarVideojuegoDTO> obtenerVideosjuegosActivos() {
         List<Videojuego> videojuegos = videojuegoRepository.findAll();
-
-        return  videojuegos.stream().filter(v -> v.getActivo()==true).toList();
+        return  VideojuegoMapper.toMostrarVideojuegoDTOList(videojuegos.stream().filter(v -> v.getActivo()==true).toList());
     }
 
-    public Videojuego actualizarVideojuego(Long id, Videojuego videojuegoEditado) {
-        return videojuegoRepository.findById(id).map(videojuego ->{
+    public ActualizarVideojuegoDTO actualizarVideojuego(Long id, ActualizarVideojuegoDTO videojuegoEditado) {
+        return VideojuegoMapper.toActualizarVideojuegoDTO(videojuegoRepository.findById(id).map(videojuego ->{
             if (videojuegoEditado.getNombre() != null) {
 
                 String nuevoNombre = videojuegoEditado.getNombre().trim();
@@ -48,7 +53,7 @@ public class VideojuegoService {
             }
 
             if (videojuegoEditado.getCategoria() != null) {
-                videojuego.setCategoria(videojuegoEditado.getCategoria());
+                videojuego.setCategoria(VideojuegoMapper.toCategoriaEntity(videojuegoEditado.getCategoria()));
             }
 
             if (videojuegoEditado.getActivo() != null) {
@@ -77,15 +82,8 @@ public class VideojuegoService {
 
             return videojuegoRepository.save(videojuego);
 
-        }).orElseThrow(() -> new RecursoNoEncontradoException("Producto con ID " + id + " no encontrado."));
+        }).orElseThrow(() -> new RecursoNoEncontradoException("Producto con ID " + id + " no encontrado.")));
     }
-
-    public void desactivarVideojuego(Long id) {
-        Videojuego videojuego = obtenerPorId(id);
-        videojuego.setActivo(false);
-        videojuegoRepository.save(videojuego);
-    }
-
 
     private void validarPrecio(BigDecimal precio) {
         if (precio.compareTo(BigDecimal.ZERO) < 0) {
