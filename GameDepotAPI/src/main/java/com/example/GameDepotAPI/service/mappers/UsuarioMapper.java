@@ -1,8 +1,8 @@
 package com.example.GameDepotAPI.service.mappers;
 
-import com.example.GameDepotAPI.dto.ActualizarUsuarioDTO;
-import com.example.GameDepotAPI.dto.MostrarUsuarioDTO;
-import com.example.GameDepotAPI.dto.RegistrarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.ActualizarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.MostrarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.RegistrarUsuarioDTO;
 import com.example.GameDepotAPI.model.usuario.Usuario;
 
 public class UsuarioMapper {

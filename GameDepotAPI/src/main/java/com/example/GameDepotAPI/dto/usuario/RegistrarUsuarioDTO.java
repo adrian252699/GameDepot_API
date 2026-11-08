@@ -1,4 +1,4 @@
-package com.example.GameDepotAPI.dto;
+package com.example.GameDepotAPI.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +11,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActualizarUsuarioDTO {
-    private Long id;
+public class RegistrarUsuarioDTO {
     private String nombre;
     private String email;
     private String password;
     private String rol;
     private LocalDateTime fechaRegistro;
+
+    public RegistrarUsuarioDTO(String nombre, String email, String rol, LocalDateTime fechaRegistro) {
+        this.nombre = nombre;
+        this.email = email;
+        this.rol = rol;
+        this.fechaRegistro = fechaRegistro;
+    }
 }
+
+

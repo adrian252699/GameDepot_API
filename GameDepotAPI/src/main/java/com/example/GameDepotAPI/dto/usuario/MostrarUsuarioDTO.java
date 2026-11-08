@@ -1,4 +1,4 @@
-package com.example.GameDepotAPI.dto;
+package com.example.GameDepotAPI.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

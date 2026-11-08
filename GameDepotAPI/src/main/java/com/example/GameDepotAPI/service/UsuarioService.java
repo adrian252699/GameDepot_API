@@ -1,8 +1,8 @@
 package com.example.GameDepotAPI.service;
 
-import com.example.GameDepotAPI.dto.ActualizarUsuarioDTO;
-import com.example.GameDepotAPI.dto.MostrarUsuarioDTO;
-import com.example.GameDepotAPI.dto.RegistrarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.ActualizarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.MostrarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.RegistrarUsuarioDTO;
 import com.example.GameDepotAPI.dto.enums.RolUsuario;
 import com.example.GameDepotAPI.exception.NegocioException;
 import com.example.GameDepotAPI.exception.RecursoNoEncontradoException;
@@ -10,8 +10,6 @@ import com.example.GameDepotAPI.model.usuario.Usuario;
 import com.example.GameDepotAPI.repository.UsuarioRepository;
 import com.example.GameDepotAPI.service.mappers.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +36,10 @@ public class UsuarioService {
     }
 
     public MostrarUsuarioDTO obtenerPorId(Long id) {
-        return UsuarioMapper.toMostrarUsuarioDTO(usuarioRepository.findById(id).orElse(null));
+        return UsuarioMapper.toMostrarUsuarioDTO(usuarioRepository.findById(id).orElseThrow(
+                    () -> new RecursoNoEncontradoException("Usuario con ID " + id + " no encontrado.")
+                )
+        );
     }
 
     public MostrarUsuarioDTO obtenerPorEmail(String email) {
@@ -46,23 +47,31 @@ public class UsuarioService {
     }
 
     public RegistrarUsuarioDTO registrarUsuario(RegistrarUsuarioDTO usuario) {
-        String nombreNormalizado = usuario.getNombre().trim();
-        String emailNormalizado = usuario.getEmail().trim();
+        if (usuario == null) {
+            throw new NegocioException("Usuario Vacio.");
+        }
 
-        validarEmail(emailNormalizado);
+        if (usuario.getNombre() == null) {
+            throw new NegocioException("Nombre Vacio.");
+        }
+
+        String nombreNormalizado = usuario.getNombre().trim();
+
+
+        validarEmail(usuario.getEmail());
         validarPassword(usuario.getPassword());
 
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new NegocioException(
                     "Ya existe un usuario con el correo: "
-                            + emailNormalizado
+                            + usuario.getEmail()
             );
         }
 
         Usuario usuarioGuardar = new Usuario();
 
         usuarioGuardar.setNombre(nombreNormalizado);
-        usuarioGuardar.setEmail(emailNormalizado);
+        usuarioGuardar.setEmail(usuario.getEmail());
 
         usuarioGuardar.setPassword(passwordEncoder.encode(usuario.getPassword()));
 

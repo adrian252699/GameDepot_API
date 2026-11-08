@@ -1,8 +1,8 @@
 package com.example.GameDepotAPI.controller;
 
-import com.example.GameDepotAPI.dto.ActualizarUsuarioDTO;
-import com.example.GameDepotAPI.dto.MostrarUsuarioDTO;
-import com.example.GameDepotAPI.dto.RegistrarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.ActualizarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.MostrarUsuarioDTO;
+import com.example.GameDepotAPI.dto.usuario.RegistrarUsuarioDTO;
 import com.example.GameDepotAPI.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
