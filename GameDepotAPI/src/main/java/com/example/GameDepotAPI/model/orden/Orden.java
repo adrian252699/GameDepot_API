@@ -1,5 +1,6 @@
 package com.example.GameDepotAPI.model.orden;
 
+import com.example.GameDepotAPI.dto.enums.EstadoOrden;
 import com.example.GameDepotAPI.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

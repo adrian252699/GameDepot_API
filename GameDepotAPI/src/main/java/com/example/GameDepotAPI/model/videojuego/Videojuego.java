@@ -24,7 +24,7 @@ public class Videojuego {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categorias;
+    private Categoria categoria;
 
     @Column(length = 250)
     private String descripcion;

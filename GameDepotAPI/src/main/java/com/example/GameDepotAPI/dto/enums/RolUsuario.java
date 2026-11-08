@@ -1,4 +1,4 @@
-package com.example.GameDepotAPI.model.usuario;
+package com.example.GameDepotAPI.dto.enums;
 
 public enum RolUsuario {
     CLIENTE,
