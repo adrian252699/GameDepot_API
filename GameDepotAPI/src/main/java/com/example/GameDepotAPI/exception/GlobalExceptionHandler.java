@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDTO> manejarErrorDeServidor(
-            RecursoNoEncontradoException ex
+            Exception ex
     ) {
         List<String> details = new ArrayList<>();
 

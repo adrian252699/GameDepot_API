@@ -76,6 +76,8 @@ public class UsuarioService {
         usuarioGuardar.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         usuarioGuardar.setRol(RolUsuario.CLIENTE);
+
+        usuarioGuardar.setPais(usuario.getPais());
         usuarioGuardar.setFechaRegistro(LocalDateTime.now());
 
         usuarioRepository.save(usuarioGuardar);

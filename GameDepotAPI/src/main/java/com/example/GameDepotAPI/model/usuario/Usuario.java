@@ -37,4 +37,13 @@ public class Usuario {
 
     @Column(nullable = false)
     private String pais;
+
+    public Usuario(Long id, String nombre, String email, RolUsuario rol, LocalDateTime fechaRegistro, String pais) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.rol = rol;
+        this.fechaRegistro = fechaRegistro;
+        this.pais = pais;
+    }
 }

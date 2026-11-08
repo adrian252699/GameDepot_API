@@ -4,6 +4,10 @@ import com.example.GameDepotAPI.exception.JwtAccessDeniedHandler;
 import com.example.GameDepotAPI.exception.JwtAuthenticationEntryPoint;
 import com.example.GameDepotAPI.service.jwt.JwtAuthenticationFilter;
 import io.jsonwebtoken.security.MacAlgorithm;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +19,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.util.Base64;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig{
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -39,9 +45,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http
-    ) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable()).sessionManagement(session ->
                         session.sessionCreationPolicy(
@@ -74,18 +78,18 @@ public class SecurityConfig {
                         // Catálogo público
                         .requestMatchers(
                                 HttpMethod.GET,
-                                "/api/producto/**",
-                                "/api/categoria/**"
+                                "/api/videojuego/**"
                         ).permitAll()
 
                         // Futuras rutas administrativas
                         .requestMatchers(
                                 "/api/admin/**"
-                        ).hasRole("ADMINISTRADOR")
+                        ).hasRole("ADMIN")
 
                         //Carrito
                         .requestMatchers(
-                                "/api/carrito/**"
+                                "/api/carrito/**",
+                                "/api/carrito/items/**"
                         ).hasRole("CLIENTE")
 
                         //Ordenes
@@ -99,11 +103,11 @@ public class SecurityConfig {
                         ).hasRole("CLIENTE")
 
                         .requestMatchers("/api/admin/**")
-                        .hasRole("ADMINISTRADOR")
+                        .hasRole("ADMIN")
 
                         .requestMatchers(
                                 HttpMethod.GET,
-                                "/uploads/productos/**"
+                                "/uploads/videojuegos/**"
                         ).permitAll()
 
                         .requestMatchers(
@@ -118,4 +122,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

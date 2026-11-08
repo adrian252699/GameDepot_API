@@ -1,5 +1,6 @@
 package com.example.GameDepotAPI.service.mappers;
 
+import com.example.GameDepotAPI.dto.enums.RolUsuario;
 import com.example.GameDepotAPI.dto.usuario.ActualizarUsuarioDTO;
 import com.example.GameDepotAPI.dto.usuario.MostrarUsuarioDTO;
 import com.example.GameDepotAPI.dto.usuario.RegistrarUsuarioDTO;
@@ -15,6 +16,7 @@ public class UsuarioMapper {
                 usuario.getNombre(),
                 usuario.getEmail(),
                 usuario.getRol().toString(),
+                usuario.getPais(),
                 usuario.getFechaRegistro()
         );
     }
@@ -29,7 +31,23 @@ public class UsuarioMapper {
                 usuario.getNombre(),
                 usuario.getEmail(),
                 usuario.getRol().toString(),
-                usuario.getFechaRegistro()
+                usuario.getFechaRegistro(),
+                usuario.getPais()
+        );
+    }
+
+    public static Usuario toUsuarioEntity(MostrarUsuarioDTO mostrarUsuarioDTO) {
+        if (mostrarUsuarioDTO == null) {
+            return null;
+        }
+
+        return new Usuario(
+                mostrarUsuarioDTO.getId(),
+                mostrarUsuarioDTO.getNombre(),
+                mostrarUsuarioDTO.getEmail(),
+                RolUsuario.valueOf(mostrarUsuarioDTO.getRol()),
+                mostrarUsuarioDTO.getFechaRegistro(),
+                mostrarUsuarioDTO.getPais()
         );
     }
 
