@@ -1,4 +1,4 @@
-package com.example.GameDepotAPI.model.pago;
+package com.example.GameDepotAPI.dto.enums;
 
 public enum EstadoPago {
     PENDIENTE,

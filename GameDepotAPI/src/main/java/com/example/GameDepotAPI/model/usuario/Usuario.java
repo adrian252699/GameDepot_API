@@ -1,5 +1,6 @@
 package com.example.GameDepotAPI.model.usuario;
 
+import com.example.GameDepotAPI.dto.enums.RolUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
