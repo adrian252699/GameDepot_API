@@ -16,12 +16,14 @@ public class RegistrarUsuarioDTO {
     private String email;
     private String password;
     private String rol;
+    private String pais;
     private LocalDateTime fechaRegistro;
 
-    public RegistrarUsuarioDTO(String nombre, String email, String rol, LocalDateTime fechaRegistro) {
+    public RegistrarUsuarioDTO(String nombre, String email, String rol, String pais, LocalDateTime fechaRegistro) {
         this.nombre = nombre;
         this.email = email;
         this.rol = rol;
+        this.pais = pais;
         this.fechaRegistro = fechaRegistro;
     }
 }

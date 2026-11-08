@@ -2,6 +2,7 @@ package com.example.GameDepotAPI.service.jwt;
 
 import com.example.GameDepotAPI.model.usuario.Usuario;
 import com.example.GameDepotAPI.repository.UsuarioRepository;
+import com.example.GameDepotAPI.service.mappers.UsuarioMapper;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -60,7 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
-                                    usuario,
+                                    UsuarioMapper.toMostrarUsuarioDTO(usuario),
                                     null,
                                     List.of(
                                             new SimpleGrantedAuthority(
@@ -89,4 +90,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
 }

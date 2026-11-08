@@ -46,7 +46,8 @@ public class AuthService {
                         usuario.getNombre(),
                         usuario.getEmail(),
                         usuario.getRol().toString(),
-                        usuario.getFechaRegistro()
+                        usuario.getFechaRegistro(),
+                        usuario.getPais()
                 );
 
         return new SesionResponseDTO(
