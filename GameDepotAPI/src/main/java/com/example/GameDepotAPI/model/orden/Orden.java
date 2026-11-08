@@ -1,6 +1,8 @@
 package com.example.GameDepotAPI.model.orden;
 
 import com.example.GameDepotAPI.dto.enums.EstadoOrden;
+import com.example.GameDepotAPI.dto.enums.EstadoPago;
+import com.example.GameDepotAPI.model.pago.Pago;
 import com.example.GameDepotAPI.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,9 +39,21 @@ public class Orden {
     @Column(nullable = false)
     private EstadoOrden estado;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name= "estado_pago",nullable = false)
+    private EstadoPago estadoPago;
+
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemOrden> items;
+    private List<ItemOrden> items= new ArrayList<>();
+
+    @OneToOne(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Pago pago;
+
+    public void agregarItem(ItemOrden item) {
+        items.add(item);
+        item.setOrden(this);
+    }
 }
