@@ -34,4 +34,7 @@ public class Usuario {
 
     @Column(nullable = false)
     private LocalDateTime fechaRegistro;
+
+    @Column(nullable = false)
+    private String pais;
 }

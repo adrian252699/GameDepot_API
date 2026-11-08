@@ -20,12 +20,14 @@ public class VideojuegoService {
     @Autowired
     private VideojuegoRepository videojuegoRepository;
 
+    /* Este endpoint corresponde a un admin
     public GuardarVideojuegoDTO guardarVideojuego(GuardarVideojuegoDTO videojuegoDTO) {
 
         Videojuego videojuegoEntity = videojuegoRepository.save(VideojuegoMapper.toVideojuegoEntity(videojuegoDTO));
 
         return VideojuegoMapper.toGuardarVideojuegoDTO(videojuegoEntity);
-    }
+    }*/
+
 
     public MostrarVideojuegoDTO obtenerPorId(Long id) {
         return VideojuegoMapper.toMostrarVideojuegoDTO(videojuegoRepository.getById(id));
@@ -36,6 +38,7 @@ public class VideojuegoService {
         return  VideojuegoMapper.toMostrarVideojuegoDTOList(videojuegos.stream().filter(v -> v.getActivo()==true).toList());
     }
 
+    /* este metodo corresponde a un admin no a un usuario
     public ActualizarVideojuegoDTO actualizarVideojuego(Long id, ActualizarVideojuegoDTO videojuegoEditado) {
         return VideojuegoMapper.toActualizarVideojuegoDTO(videojuegoRepository.findById(id).map(videojuego ->{
             if (videojuegoEditado.getNombre() != null) {
@@ -83,7 +86,7 @@ public class VideojuegoService {
             return videojuegoRepository.save(videojuego);
 
         }).orElseThrow(() -> new RecursoNoEncontradoException("Producto con ID " + id + " no encontrado.")));
-    }
+    }*/
 
     private void validarPrecio(BigDecimal precio) {
         if (precio.compareTo(BigDecimal.ZERO) < 0) {

@@ -14,27 +14,36 @@ import java.util.List;
 @RequestMapping("api/videojuego")
 public class VideojuegoController {
 
+    /*Un cliente solo tendra acceso visual a los videojuegos,
+    * no puede crear o modificar videojuegos*/
+
+    /*Aun falta agregar filtros de busqueda*/
+
     @Autowired
     private VideojuegoService videojuegoService;
 
+    /*Este endpoint se utiliza para cargar la pagina principal*/
     @GetMapping()
     public List<MostrarVideojuegoDTO> listarVideojuegosActivos(){
         return videojuegoService.obtenerVideosjuegosActivos();
     }
 
+    /*Este endpoint se utilizara al seleccionar un videojuego y mostrar su informacion*/
     @GetMapping("/{id}")
     public MostrarVideojuegoDTO obtenerVideojuegoPorId(@PathVariable Long id){
         return videojuegoService.obtenerPorId(id);
     }
 
+    /* Este endpoint corresponde a un admin no a un cliente
     @PostMapping()
     public GuardarVideojuegoDTO crearVideojuego(@RequestBody GuardarVideojuegoDTO videojuego){
         return videojuegoService.guardarVideojuego(videojuego);
-    }
+    }*/
 
+    /* Este endpoint corresponde a un admin no a un cliente
     @PatchMapping("/{id}")
     public ActualizarVideojuegoDTO actualizarVideojuego(@PathVariable Long id, @RequestBody ActualizarVideojuegoDTO videojuego){
         return videojuegoService.actualizarVideojuego(id, videojuego);
-    }
+    }*/
 
 }

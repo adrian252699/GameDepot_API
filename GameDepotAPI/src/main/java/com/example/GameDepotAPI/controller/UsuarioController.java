@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {
+    /*Falta implementar la logica del login*/
+
     @Autowired
     private UsuarioService usuarioService;
 
@@ -18,6 +20,7 @@ public class UsuarioController {
         return usuarioService.obtenerPorId(id);
     }
 
+    /*Tengo duda de que este endpoint pueda servirle al cliente*/
     @GetMapping()
     public MostrarUsuarioDTO obtenerUsuarioPorEmail(@RequestBody String email){
         return usuarioService.obtenerPorEmail(email);

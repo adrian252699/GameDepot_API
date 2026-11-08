@@ -43,7 +43,7 @@ public class UsuarioService {
     }
 
     public MostrarUsuarioDTO obtenerPorEmail(String email) {
-        return UsuarioMapper.toMostrarUsuarioDTO(usuarioRepository.findByEmail(email));
+        return UsuarioMapper.toMostrarUsuarioDTO(usuarioRepository.findByEmail(email).orElse(null));
     }
 
     public RegistrarUsuarioDTO registrarUsuario(RegistrarUsuarioDTO usuario) {
@@ -92,8 +92,6 @@ public class UsuarioService {
             throw new NegocioException("Los datos del usuario no pueden ser nulos.");
         }
 
-
-
         return UsuarioMapper.toActualizarUsuarioDTO(usuarioRepository.findById(id).map(usuario -> {
 
             if (usuarioParcial.getNombre() != null) {
@@ -141,31 +139,8 @@ public class UsuarioService {
 
     }
 
-    public ActualizarUsuarioDTO actualizarPassword(Long id,String passwordNueva) {
-        if (id == null || id <= 0) {
-            throw new NegocioException("El ID del usuario debe ser un número positivo.");
-        }
-
-        if (passwordNueva == null || passwordNueva.isBlank()) {
-            throw new NegocioException("La nueva contraseña es obligatoria.");
-        }
 
 
-        if (!PASSWORD_PATTERN.matcher(passwordNueva).matches()) {
-            throw new NegocioException(
-                    "La contraseña debe tener al menos 8 caracteres e incluir " +
-                            "una mayúscula, una minúscula, un número y un símbolo especial.");
-        }
-
-        return UsuarioMapper.toActualizarUsuarioDTO(usuarioRepository.findById(id).map(usuario->{
-            // Evitar reusar la misma contraseña
-            if (passwordEncoder.matches(passwordNueva, usuario.getPassword())) {
-                throw new NegocioException("La nueva contraseña no puede ser igual a la contraseña actual.");
-            }
-            usuario.setPassword(passwordEncoder.encode(passwordNueva));
-            return usuarioRepository.save(usuario);
-        }).orElseThrow(() -> new RecursoNoEncontradoException("Usuario con ID " + id + " no encontrado.")));
-    }
 
     /*Metodos privados para validar*/
     private void validarEmail(String email) {
@@ -184,9 +159,7 @@ public class UsuarioService {
             throw new NegocioException("La contraseña del usuario es obligatoria.");
         }
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            throw new NegocioException(
-                    "La contraseña debe tener al menos 8 caracteres e incluir " +
-                            "una mayúscula, una minúscula, un número y un símbolo especial.");
+            throw new NegocioException("La contraseña debe tener al menos 8 caracteres e incluir una mayúscula, una minúscula, un número y un símbolo especial.");
         }
     }
 }
